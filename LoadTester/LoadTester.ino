@@ -83,7 +83,7 @@ void loop() {
   triggerAlarm = digitalRead(alarmSwitchPin);
   triggerTamper = digitalRead(tamperSwitchPin);
   triggerTrouble = digitalRead(troubleSwitchPin);
-  constantTime = digitalRead(randomSwitchPin);
+  constantTime = !digitalRead(randomSwitchPin);
 
   //Test if the pot pins are decalred then update the Mean Time
 #ifdef meanActivateAlarmPin
