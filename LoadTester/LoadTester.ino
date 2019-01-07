@@ -18,9 +18,9 @@ const int mulitplyer = 25; //Multiplyer for input from pot
 /*Declare Mean Time
   The Mean time is the middle time of the random number set that gets generated
 */
-unsigned long meanActivateAlarm = 1000;
-unsigned long meanActivateTamper = 1000;
-unsigned long meanActivateTrouble = 1000;
+unsigned long meanActivateAlarm = 25000;
+unsigned long meanActivateTamper = 25000;
+unsigned long meanActivateTrouble = 25000;
 unsigned long meanDeactivate = 1000;
 
 SimpleTimer timer1; //The timers for driving relays each supports 8 running processes
