@@ -11,16 +11,17 @@ const int alarmSwitchPin = 3;
 const int tamperSwitchPin = 4;
 const int troubleSwitchPin = 5;
 
-#define meanActivateAlarmPin A1 //Pot pins for adjusting the mean duration, comment me to deactivate
-#define meanActivateTamperPin A2 //Pot pins for adjusting the mean duration, comment me to deactivate
-#define meanActivateTroublePin A3 //Pot pins for adjusting the mean duration, comment me to deactivate
-const int mulitplyer = 25; //Multiplyer for input from pot
+//#define meanActivateAlarmPin A1 //Pot pins for adjusting the mean duration, comment me to deactivate
+//#define meanActivateTamperPin A2 //Pot pins for adjusting the mean duration, comment me to deactivate
+//#define meanActivateTroublePin A3 //Pot pins for adjusting the mean duration, comment me to deactivate
+/* Multiplyer for input from pot. Pot input is a range from 0 - 1023
+ * maximum time of meantime is 1023 * multiplyer. Example: 1023 * 25 = 25575 miliseconds or 25.5 seconds*/
+const int mulitplyer = 25; 
 /*Declare Mean Time
-  The Mean time is the middle time of the random number set that gets generated
-*/
-unsigned long meanActivateAlarm = 1000;
-unsigned long meanActivateTamper = 1000;
-unsigned long meanActivateTrouble = 1000;
+  The Mean time is the middle time of the random number set that gets generated*/
+unsigned long meanActivateAlarm = 25000;
+unsigned long meanActivateTamper = 25000;
+unsigned long meanActivateTrouble = 25000;
 unsigned long meanDeactivate = 1000;
 
 SimpleTimer timer1; //The timers for driving relays each supports 8 running processes
@@ -28,10 +29,10 @@ SimpleTimer timer2;
 SimpleTimer timer3;
 SimpleTimer timer4;
 
-bool constantTime = true; //Tied to switch. False for randomized times, True for static times.
-bool triggerAlarm = false; //Tied to switch, specifies whether or not to tigger the alarm signals
-bool triggerTamper = false; //Tied to switch, specifies whether or not to tigger the tamper signals
-bool triggerTrouble = false; //Tied to switch, specifies whether or not to tigger the trouble signals
+bool constantTime = true; //Tied to switch. False for randomized times, True for static times. These Values get Changed on first Run of Loop
+bool triggerAlarm = false; //Tied to switch, specifies whether or not to tigger the alarm signals. These Values get Changed on first Run of Loop
+bool triggerTamper = false; //Tied to switch, specifies whether or not to tigger the tamper signals. These Values get Changed on first Run of Loop
+bool triggerTrouble = false; //Tied to switch, specifies whether or not to tigger the trouble signals. These Values get Changed on first Run of Loop
 
 const int alarmPins[] = {22, 25, 28, 31, 34, 37, 40, 43, 46, 49}; //Pin definitions for the alarm signal. First is alarm 1, second alarm 2, etc..
 const int tamperPins[] = {23, 26, 29, 32, 35, 38, 41, 44, 47, 50}; //Pin definitions for the tamper signal. First is alarm 1, second alarm 2, etc..
@@ -47,13 +48,14 @@ const int numberOfSets = 10;//Number of alarm points
 bool stateAlarm[10], stateTamper[10], stateTrouble[10]; //Declare Alarm, Tamper, and Trouble State tracker
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(9600);//Begin Serial
   Serial.println("HELLO WORLD");
   //initalize Switch pins
   pinMode(alarmSwitchPin, INPUT_PULLUP);
   pinMode(tamperSwitchPin, INPUT_PULLUP);
   pinMode(troubleSwitchPin, INPUT_PULLUP);
   pinMode(randomSwitchPin, INPUT_PULLUP);
+  
   randomSeed(analogRead(0)); //Seed random number generator
   srand(random(2000000000));
   
@@ -66,7 +68,7 @@ void setup() {
     activateTrouble[i]();
     //Serial.print(i);
   }
-  //Test if the pot pins are declared then set their mode
+  //Test if the pot pins are declared then initalize
 #ifdef meanActivateAlarmPin
   pinMode(meanActivateAlarmPin,INPUT);
 #endif
@@ -87,22 +89,22 @@ void loop() {
 
   //Test if the pot pins are decalred then update the Mean Time
 #ifdef meanActivateAlarmPin
-  meanActivateAlarm = mulitplyer * analogRead(meanActivateAlarmPin);
-  Serial.print("meanActivateAlarm =");
+  meanActivateAlarm = mulitplyer * analogRead(meanActivateAlarmPin); // sets meanActivateAlarm Time to the current value of meanActivateAlarmPin Times the multiplyer
+  Serial.print("meanActivateAlarm ="); //Update Serial
   Serial.println(meanActivateAlarm);
 #endif
 #ifdef meanActivateTamperPin
-  meanActivateTamper = mulitplyer * analogRead(meanActivateTamperPin);
-  Serial.print("meanActivateTamper =");
+  meanActivateTamper = mulitplyer * analogRead(meanActivateTamperPin);// sets meanActivateTamper Time to the current value of meanActivateTamperPin Times the multiplyer
+  Serial.print("meanActivateTamper ="); //Update Serial
   Serial.println(meanActivateTamper);
 #endif
 #ifdef meanActivateTroublePin
-  meanActivateTrouble = mulitplyer * analogRead(meanActivateTroublePin);
-  Serial.print("meanActivateTrouble =");
+  meanActivateTrouble = mulitplyer * analogRead(meanActivateTroublePin);// sets meanActivateTrouble Time to the current value of meanActivateTroublePin Times the multiplyer
+  Serial.print("meanActivateTrouble ="); //Update Serial
   Serial.println(meanActivateTrouble);
 #endif
 
-  //Runs all timers to see if the activation time has passed
+  //Runs all timers to see if the Timeout has passed
   timer1.run();
   timer2.run();
   timer3.run();
@@ -125,15 +127,15 @@ unsigned long randomize(unsigned long mean) {
 void activateAlarm0() {
   if (stateAlarm[0]) { //Reset Alarm
     if (triggerAlarm) { //If the alarms are active
-      digitalWrite(alarmPins[0], LOW);
+      digitalWrite(alarmPins[0], LOW); //Set output to LOW (Relay in NC state)
     }
-    timer1.setTimeout(randomize(meanDeactivate), activateAlarm0);
-    stateAlarm[0] = false;
+    timer1.setTimeout(randomize(meanDeactivate), activateAlarm0); //Reset Timeout
+    stateAlarm[0] = false; //Swap Current Status for next activation
   }
   else { //Trigger alarm
-    digitalWrite(alarmPins[0], HIGH);
-    timer1.setTimeout(randomize(meanActivateAlarm), activateAlarm0);
-    stateAlarm[0] = true;
+    digitalWrite(alarmPins[0], HIGH); //Set output to HIGH (Relat in NO state)
+    timer1.setTimeout(randomize(meanActivateAlarm), activateAlarm0); //Reset Timeout
+    stateAlarm[0] = true; //Swap Current Status for next activation
   }
 }
 void activateAlarm1() {
