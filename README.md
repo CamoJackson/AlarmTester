@@ -26,7 +26,7 @@ Parts list (This is quantiy of parts needed not quantity to buy of links):
  --<a href="https://amzn.to/2C445wj">2x 16-Channel Relay Module</a>  
  --<a href="https://amzn.to/2CaDA8e">Arduino Mega</a>  
  --<a href="https://amzn.to/2C4uU3o">Dupont Wires</a>  
- --<a href="https://amzn.to/2C4vM8a">5x Two Posistion Switchs (Optional but recomened)</a>  
+ --<a href="https://amzn.to/2C4vM8a">4x Two Posistion Switchs (Optional but recomened)</a>  
  --<a href="https://amzn.to/2C46LtL">3 10kΩ potentiometer (Optional)</a>  
  
 Based off of code by Donald Cook  
