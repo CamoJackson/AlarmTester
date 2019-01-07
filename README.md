@@ -1,10 +1,25 @@
 <h1>AlarmTester</h1>
 <h3>This software is provieded as is with no guarantee of support from the author!</h3>  
   
-AlarmTester is designed to simulate alarm points being triggerd including Tampers and Trouples. There are 10 alarm points codded with each subgrouped into Alarm, Trouble, and Tamper. This means that over 30 Relays are needed to control all points, this is done with two 16-Channel Relay Module hooked into a arduino mega via Jumperwires in sequence from pins 22-51.  
+AlarmTester is designed to simulate alarm points being triggerd including Tampers and Troubles. There are 10 alarm points codded with each subgrouped into Alarm, Trouble, and Tamper. This means that over 30 Relays are needed to control all points, this is done with two 16-Channel Relay Module hooked into a arduino mega via Jumperwires in sequence from pins 22-51.  
   
 Inorder to disable Random, Alarm, Trouble, and Tamper. Ground the pins that are refranced in the code.
-  
+
+Default settings are:  
+--Potetiometer's Disabled  
+--Mean Time is 25 second  
+--Random Seed = A0  
+--Switch pins
+<pre>Random = 2
+Alarm = 3
+Tamper = 4
+Trouble = 5</pre>
+--Pot Pins
+<pre>Alarm = A1
+Tamper = A2
+Trouble = A3</pre>
+--Multiplier = 25
+
 To enable and disable live potetiomiter input just comment the declerations.  
   
 Parts list (This is quantiy of parts needed not quantity to buy of links):  
