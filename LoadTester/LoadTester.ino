@@ -59,10 +59,13 @@ void setup() {
   
   for (int i = 0; i < numberOfSets; i++) { //initalize outputs and start processes
     pinMode(alarmPins[i], OUTPUT);
+    stateAlarm[i]=1;
     activateAlarm[i]();
     pinMode(tamperPins[i], OUTPUT);
+    stateTamper[i]=1;
     activateTamper[i]();
     pinMode(troublePins[i], OUTPUT);
+    stateTrouble[i]=1;
     activateTrouble[i]();
     //Serial.print(i);
   }
