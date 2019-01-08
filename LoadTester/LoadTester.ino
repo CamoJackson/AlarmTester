@@ -10,10 +10,10 @@ const int randomSwitchPin = 2;
 const int alarmSwitchPin = 3;
 const int tamperSwitchPin = 4;
 const int troubleSwitchPin = 5;
-
-#define meanActivateAlarmPin A1 //Pot pins for adjusting the mean duration, comment me to deactivate
-#define meanActivateTamperPin A2 //Pot pins for adjusting the mean duration, comment me to deactivate
-#define meanActivateTroublePin A3 //Pot pins for adjusting the mean duration, comment me to deactivate
+//
+//#define meanActivateAlarmPin A1 //Pot pins for adjusting the mean duration, comment me to deactivate
+//#define meanActivateTamperPin A2 //Pot pins for adjusting the mean duration, comment me to deactivate
+//#define meanActivateTroublePin A3 //Pot pins for adjusting the mean duration, comment me to deactivate
 const int mulitplyer = 25; //Multiplyer for input from pot
 /*Declare Mean Time
   The Mean time is the middle time of the random number set that gets generated
