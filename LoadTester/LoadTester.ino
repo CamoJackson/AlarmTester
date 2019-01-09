@@ -17,10 +17,13 @@ const int troubleSwitchPin = 5;
 const int mulitplyer = 25; //Multiplyer for input from pot
 /*Declare Mean Time
   The Mean time is the middle time of the random number set that gets generated
+  The potitiomiter range is 0-1023 or 0-1 second inorder to increase the on time the pot value is multiplyed.
+  Example: the input is 512 this is multiplyed by the multiplyer (25) to equal 12800 or 12.8 seconds.
+  The max on time is 1023 * multiplyer (25) which is 25575 or 25.58 seconds
 */
-unsigned long meanActivateAlarm = 25000;
-unsigned long meanActivateTamper = 25000;
-unsigned long meanActivateTrouble = 25000;
+unsigned long meanActivateAlarm = 11000;
+unsigned long meanActivateTamper = 11000;
+unsigned long meanActivateTrouble = 11000;
 unsigned long meanDeactivate = 1000;
 
 SimpleTimer timer1; //The timers for driving relays each supports 8 running processes
