@@ -7,7 +7,7 @@ Inorder to disable Random, Alarm, Trouble, and Tamper. Ground the pins that are 
 
 Default settings are:  
 --Potetiometer's Disabled  
---Mean Time is 25 second  
+--Mean Time is 11 second  
 --Random Seed = A0  
 --Switch pins
 <pre>Random = 2
